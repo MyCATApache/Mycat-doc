@@ -1,0 +1,109 @@
+MyCAT自增字段和返回生成的主键ID的经验分享
+说明：
+1、mysql本身对非自增长主键，使用last_insert_id()是不会返回结果的，只会返回0.
+2、mysql只会对定义自增长主键，可以用last_insert_id()返回主键值。
+
+mycat目前提供了自增长主键功能，但是如果对应的mysql节点上数据表，没有定义auto_increment，
+那么在mycat层调用last_insert_id()也是不会返回结果的。
+正确使用方式如下：
+1、mysql定义自增主键
+CREATE TABLE `tt2` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nm` INT(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MYISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+2、mycat定义自增
+[root@test conf]# vim schema.xml
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://org.opencloudb/">
+
+        <schema name="TESTDB" checkSQLschema="false" sqlMaxLimit="100">
+            <!-- random sharding using mod sharind rule -->
+	    <!-- autoIncrement="true" 属性-->
+            <table name="tt2" primaryKey="id" autoIncrement="true" dataNode="dn1,dn2,dn3,dn4,dn5" rule="mod-long" />
+            <table name="mycat_sequence" primaryKey="name" dataNode="dn1"/>
+        </schema>
+
+        <dataNode name="dn1" dataHost="localhost1" database="db1" />
+        <dataNode name="dn2" dataHost="localhost1" database="db2" />
+        <dataNode name="dn3" dataHost="localhost1" database="db3" />
+        <dataNode name="dn4" dataHost="localhost1" database="db4" />
+        <dataNode name="dn5" dataHost="localhost1" database="db5" />
+
+        <dataHost name="localhost1" maxCon="1000" minCon="20" balance="0" writeType="0" dbType="mysql" dbDriver="native">
+                <heartbeat>select user()</heartbeat>
+                <writeHost host="hostM1" url="127.0.0.1:3366" user="root" password="123456">
+                </writeHost>
+        </dataHost>
+</mycat:schema>
+
+3、mycat对应sequence_db_conf.properties增加相应设置；
+4、mycat的对应mycat_sequence增加对应记录。
+5、链接mycat，测试结果如下：
+ 
+127.0.0.1/root:[TESTDB> insert into tt2(nm) values (99);
+Query OK, 1 row affected (0.14 sec)
+
+127.0.0.1/root:[TESTDB> select last_insert_id();
++------------------+
+| LAST_INSERT_ID() |
++------------------+
+|              101 |
++------------------+
+1 row in set (0.01 sec)
+
+127.0.0.1/root:[TESTDB> insert into tt2(nm) values (99);
+Query OK, 1 row affected (0.00 sec)
+
+127.0.0.1/root:[TESTDB> select last_insert_id();
++------------------+
+| LAST_INSERT_ID() |
++------------------+
+|              102 |
++------------------+
+1 row in set (0.00 sec)
+
+127.0.0.1/root:[TESTDB> insert into tt2(nm) values (99);
+Query OK, 1 row affected (0.00 sec)
+
+127.0.0.1/root:[TESTDB> select last_insert_id();
++------------------+
+| LAST_INSERT_ID() |
++------------------+
+|              103 |
++------------------+
+1 row in set (0.00 sec)
+
+127.0.0.1/root:[TESTDB> insert into tt2(nm) values (99);
+Query OK, 1 row affected (0.01 sec)
+
+127.0.0.1/root:[TESTDB> select last_insert_id();
++------------------+
+| LAST_INSERT_ID() |
++------------------+
+|              104 |
++------------------+
+1 row in set (0.00 sec)
+
+127.0.0.1/root:[TESTDB> insert into tt2(nm) values (99);
+Query OK, 1 row affected (0.00 sec)
+
+127.0.0.1/root:[TESTDB> select last_insert_id();
++------------------+
+| LAST_INSERT_ID() |
++------------------+
+|              105 |
++------------------+
+1 row in set (0.00 sec)
+
+127.0.0.1/root:[TESTDB> insert into tt2(nm) values (99);
+Query OK, 1 row affected (0.00 sec)
+
+127.0.0.1/root:[TESTDB> select last_insert_id();
++------------------+
+| LAST_INSERT_ID() |
++------------------+
+|              106 |
++------------------+
+1 row in set (0.00 sec)
