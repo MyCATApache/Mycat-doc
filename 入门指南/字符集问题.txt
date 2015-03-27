@@ -1,0 +1,7 @@
+mycat在server.xml 中配置属性charset可以决定客户端的字符集，默认为utf8，建议后端数据库也保持一致
+1.4开发版本开始支持Mysql字符集utf8mb4，此字符集需要在MySQL Server端设置为id=99如：
+<charset  name="utf8mb4">
+  <collation name="utf8mb4_general_ci"	id="99">
+</charset>  
+
+9066监控端口运行 show @@connection ,在字符集这一列中，包括字符集和id值，如utf8:33 就是标准的UTF8，而uft8:99则表明为utf8mb4
