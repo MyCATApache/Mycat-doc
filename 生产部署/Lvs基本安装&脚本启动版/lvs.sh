@@ -4,6 +4,7 @@ source /etc/profile
 VIP=10.47.7.77
 RIP1=10.47.7.211
 RIP2=10.47.7.212
+
 bond_name='bond0'
 key=8066
 
