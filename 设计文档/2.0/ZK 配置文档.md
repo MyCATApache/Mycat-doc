@@ -5,7 +5,7 @@ Mycat 2.0 的多中心集群方案，分布于不同地域(zone)内的一些 Myc
 即一个LB可以服务一个中心内的所有Cluster的负载均衡请求，也可以是多个LB，每个负担不同的Cluster的流量。
 此外建议是每一个LB都有一个Backup，平时并不连接Cluster，但监测到Master下线以后，就立即开始连接Cluster并开始工作。
 
-<img src="./resource/cat1.png" width = "600" height = "700" alt="cat1.png" align=center />
+<img src="./resource/cat1.png" width = "600" height = "400" alt="cat1.png" align=center />
 
 下图是一个 Mycat Cluster的组成部分，它是位于某个特定中心（Zone）的一个处理单元，<br/>
 包括，一个Mycat  cluster包括如下信息：<br/>
@@ -162,7 +162,7 @@ Mysql-rep-1 value {
 * 然后Mycat-eye与 LB可以用ZK来管理集群。
 
 Mycat-eye的界面原型参考：
-<img src="./resource/cat3.png" width = "600" height = "700" alt="cat1.png" align=center />
+<img src="./resource/cat3.png" width = "400" height = "250" alt="cat1.png" align=center />
 
 说明：<br/>
 *	defaultZone为zk中的第一个zone，是一个下拉框或者可以切换的组件
@@ -178,8 +178,8 @@ Mycat-eye的界面原型参考：
     <br/>
 *  对于Mycat Cluster实例,点击以后，出现下面的界面
 
-<img src="./resource/cat4.png" width = "600" height = "700" alt="cat1.png" align=center />
+<img src="./resource/cat4.png" width = "600" height = "300" alt="cat1.png" align=center />
 
 *  对于MySQL Group实例,点击以后,显示如下
-<img src="./resource/cat5.png" width = "600" height = "700" alt="cat1.png" align=center />
+<img src="./resource/cat5.png" width = "600" height = "300" alt="cat1.png" align=center />
 
