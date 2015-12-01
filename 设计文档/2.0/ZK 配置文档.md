@@ -5,7 +5,7 @@ Mycat 2.0 的多中心集群方案，分布于不同地域(zone)内的一些 Myc
 即一个LB可以服务一个中心内的所有Cluster的负载均衡请求，也可以是多个LB，每个负担不同的Cluster的流量。
 此外建议是每一个LB都有一个Backup，平时并不连接Cluster，但监测到Master下线以后，就立即开始连接Cluster并开始工作。
 
-![图片1]<https://raw.githubusercontent.com/aimer1027/Mycat-doc/master/%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/2.0/resource/cat1.png>
+<img src="./resource/cat1.png" width = "300" height = "200" alt="cat1.png" align=center />
 
 下图是一个 Mycat Cluster的组成部分，它是位于某个特定中心（Zone）的一个处理单元，<br/>
 包括，一个Mycat  cluster包括如下信息：<br/>
