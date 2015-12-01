@@ -12,7 +12,7 @@ Mycat 2.0 的多中心集群方案，分布于不同地域(zone)内的一些 Myc
 * 所属的中心（Zone），固定不可变的标示
 *	具有地理位置标示，比如北京联通机房1
 *	1个或多个采用相同配置（引用同一个MyCat Schema配置）的Mycat Server，用作负载均衡
-<img src="./resource/cat2.png" width = "600" height = "700" alt="cat1.png" align=center />
+<img src="./resource/cat2.png" width = "250" height = "300" alt="cat1.png" align=center />
 MySQL数据库服务器，是属于一个Zone内部的共享资源，不属于Cluster级别的，主要拥有以下关键信息：<br/>
 *IP地址、端口和名称
 *所在主机Host，为了区分数据迁移石时候是否需要复制文件
