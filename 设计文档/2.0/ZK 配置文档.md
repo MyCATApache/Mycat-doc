@@ -19,7 +19,6 @@ MySQL数据库服务器，是属于一个Zone内部的共享资源，不属于Cl
 *MySQL群组，定义一组具备主从关系的MySQL服务器之间的关系
 *管理员权限的用户名密码等，用于自动运维操作
 
-
 此外，配置管理部分，我们需要记录集群中所用的的主机的信息，包括账号密码等,hostId不可变化，<br/>
 可以理解为内部分配的一个编号（不同于主机名），在所有的Zone中保持唯一:<br/>
 
@@ -61,15 +60,15 @@ Server的参数包括用于负载均衡的信息，以及Mycat Server自身的�
 demo
 ```yaml
 mycat_bj_01 value:{
-  name: mycat_bj_01,
-  hostId:host_1
-  host:192.178.3.1:8066,
-  zone:bj,
-  cluster:mycat-cluster-1,
-  weigth:1,
-  leader:1,
-  state:red(red/green/yellow)
-  system-params:/params from system.xml
+		name: mycat_bj_01,
+		hostId:host_1
+		host:192.178.3.1:8066,
+		zone:bj,
+		cluster:mycat-cluster-1,
+		weigth:1,
+		leader:1,
+		state:red(red/green/yellow)
+		system-params:/params from system.xml
  }
 ```
 
