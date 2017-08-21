@@ -44,7 +44,7 @@
 
 # 4.关于
 > 官方网站
-[mycat.org.cn](http://mycat.org.cn)
+[mycat.io](http://mycat.io)
 >
 官方QQ群 106088787
 [点击链接加入群【MyCAT】](http://jq.qq.com/?_wv=1027&k=WsjgBb)
